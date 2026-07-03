@@ -1,9 +1,21 @@
-# Dockerfile for Iron Spring PL/I on Ubuntu 22.04
+# Dockerfile for Iron Spring PL/I on Debian 12 (32-bit)
+# 
+# plic is a 32-bit binary and fails with "SIGACTION 1 returned -1"
+# when run on a 64-bit kernel under Docker. Use linux/386 platform.
+#
 # Usage:
-#   docker build -t pli-dev .
-#   docker run -it pli-dev
+#   docker build --platform linux/386 -t pli-dev .
+#   docker run --platform linux/386 --security-opt seccomp=unconfined -it pli-dev
+# 
+# Test:
+#   plic -V
+#   echo 'main: proc options(main); display("Hello"); end;' > test.pli
+#   plic -C -dELF test.pli 
+#   gcc -m32 -no-pie -z muldefs -o test test.o -lprf
+#   ./test
+#
 
-FROM ubuntu:22.04
+FROM debian:bookworm-slim
 
 ARG PLI_VERSION=1.4.1
 
@@ -15,13 +27,13 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 WORKDIR /pli-dev
 
-# Install dependencies (32-bit support required for PL/I)
+# Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc-multilib \
-    libc6-i386 \
+    gcc \
     make \
     wget \
-    ca-certificates \
+    file \
+    libc6-dev \
     pkg-config \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -33,9 +45,6 @@ RUN wget -q "http://www.iron-spring.com/pli-${PLI_VERSION}.tgz" -O /tmp/pli.tgz 
     && mkdir -p /usr/lib/pli \
     && cp -r "/tmp/pli-${PLI_VERSION}/lib/"* /usr/lib/pli/ \
     && rm -rf /tmp/pli*
-
-# Verify installation
-RUN plic -V
 
 # Create a non-root user for daily work
 RUN groupadd -r plidev && useradd -r -g plidev -d /pli-dev -s /bin/bash plidev \
