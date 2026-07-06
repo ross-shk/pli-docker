@@ -8,11 +8,13 @@ This images has been tested on Linux.
 
 ## Usage
 
-```bash
 # Build
+```bash
 docker build --platform linux/386 -t pli-dev pli/
+```
 
 # Run
+```
 docker run --platform linux/386 --security-opt seccomp=unconfined -it pli-dev
 ```
 
