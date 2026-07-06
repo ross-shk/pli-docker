@@ -39,14 +39,14 @@ gcc -m32 -no-pie -z muldefs -o test test.o -lprf
 
 ## Mount a local directory
 
-Mount your source code into the container to edit on the host and compile inside:
+Mount your source code into the container to edit on the host and compile inside (replace ```/path/to/code``` with your actual path):
 
 ```bash
-docker compose run --rm -v /path/to/your/code:/pli-dev/projects pli
+docker compose run --rm -v /path/to/code:/pli-dev/projects pli
 ```
 
 Or with plain Docker:
 
 ```bash
-docker run --platform linux/386 --security-opt seccomp=unconfined -v /path/to/your/code:/pli-dev/projects -it pli-dev
+docker run --platform linux/386 --security-opt seccomp=unconfined -v /path/to/code:/pli-dev/projects -it pli-dev
 ```
