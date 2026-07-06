@@ -2,7 +2,9 @@
 
 Docker image for [Iron Spring PL/I](http://www.iron-spring.com/) on Debian 12 (32-bit).
 
-The `plic` compiler is a 32-bit binary and requires the `linux/386` platform under Docker.
+The `plic` compiler is a 32-bit binary so it requires the `linux/386` platform under Docker.
+
+This images has been tested on Linux.
 
 ## Usage
 
