@@ -17,6 +17,8 @@ docker compose run --rm pli
 
 ## Test
 
+Inside the container:
+
 ```bash
 plic -V
 ```
