@@ -1,7 +1,4 @@
 # Dockerfile for Iron Spring PL/I on Debian 12 (32-bit)
-# 
-# plic is a 32-bit binary and fails with "SIGACTION 1 returned -1"
-# when run on a 64-bit kernel under Docker. Use linux/386 platform.
 #
 # Usage:
 #   docker build --platform linux/386 -t pli-dev .
@@ -14,8 +11,12 @@
 #   gcc -m32 -no-pie -z muldefs -o test test.o -lprf
 #   ./test
 #
+# Note:
+#   plic is a 32-bit binary and fails with "SIGACTION 1 returned -1"
+#   when run on a 64-bit kernel under Docker. Use linux/386 platform.
+#
 
-FROM debian:bookworm-slim
+FROM debian:bullseye-slim
 
 ARG PLI_VERSION=1.4.1
 
@@ -33,8 +34,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc-multilib \
     libc6 \
     libc6-dev \
-    libc6-i386 \
-    libc6-dev-i386 \
     make \
     wget \
     file \
