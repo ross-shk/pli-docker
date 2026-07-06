@@ -1,0 +1,11 @@
+services:
+  pli:
+    build:
+      context: ./pli
+    platform: linux/386
+    image: pli-dev
+    security_opt:
+      - seccomp=unconfined
+    stdin_open: true
+    tty: true
+    working_dir: /pli-dev
