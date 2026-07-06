@@ -30,11 +30,16 @@ WORKDIR /pli-dev
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
+    gcc-multilib \
+    libc6 \
+    libc6-dev \
+    libc6-i386 \
+    libc6-dev-i386 \
     make \
     wget \
     file \
-    libc6-dev \
     pkg-config \
+    sudo \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -48,8 +53,12 @@ RUN wget -q "http://www.iron-spring.com/pli-${PLI_VERSION}.tgz" -O /tmp/pli.tgz 
 
 # Create a non-root user for daily work
 RUN groupadd -r plidev && useradd -r -g plidev -d /pli-dev -s /bin/bash plidev \
+    && echo "plidev ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
     && chown plidev:plidev /pli-dev
 
 USER plidev
+
+ENV PATH="/usr/local/bin:${PATH}" \
+    LD_LIBRARY_PATH="/usr/lib/pli:${LD_LIBRARY_PATH}"
 
 CMD ["/bin/bash"]
