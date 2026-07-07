@@ -6,7 +6,7 @@
 # 
 # Test:
 #   plic -V
-#   echo ' main: proc options(main); display("Hello"); end;' > test.pli
+#   echo ' main: proc options(main); display("Hello, world!"); end;' > test.pli
 #   plic -C -dELF test.pli 
 #   gcc -m32 -no-pie -z muldefs -o test test.o -lprf
 #   ./test
