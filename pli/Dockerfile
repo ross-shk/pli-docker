@@ -30,15 +30,18 @@ WORKDIR /pli-dev
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    curl \
+    file \
     gcc \
     gcc-multilib \
     libc6 \
     libc6-dev \
     make \
-    wget \
-    file \
+    nano \
     pkg-config \
     sudo \
+    wget \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
