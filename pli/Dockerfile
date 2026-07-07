@@ -53,6 +53,13 @@ RUN wget -q "http://www.iron-spring.com/pli-${PLI_VERSION}.tgz" -O /tmp/pli.tgz 
     && cp -r "/tmp/pli-${PLI_VERSION}/lib/"* /usr/lib/pli/ \
     && rm -rf /tmp/pli*
 
+# Download and install plicc (PL/I compile & link toolchain)
+RUN wget -q "https://github.com/ross-shk/plic-chain/archive/refs/tags/v1.0.0.tar.gz" -O /tmp/plicc.tgz \
+    && tar -xzf /tmp/plicc.tgz -C /tmp \
+    && cp /tmp/plic-chain-1.0.0/plicc /usr/local/bin/plicc \
+    && chmod 755 /usr/local/bin/plicc \
+    && rm -rf /tmp/plicc*
+
 # Create a non-root user for daily work
 RUN groupadd -r plidev && useradd -r -g plidev -d /pli-dev -s /bin/bash plidev \
     && echo "plidev ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
