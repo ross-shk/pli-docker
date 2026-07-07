@@ -2,14 +2,16 @@
 #
 # Usage:
 #   docker build --platform linux/386 -t pli-dev .
-#   docker run --platform linux/386 --security-opt seccomp=unconfined -it pli-dev
+#   docker run --rm --platform linux/386 --security-opt seccomp=unconfined pli-dev <args>
 # 
-# Test:
-#   plic -V
-#   echo ' main: proc options(main); display("Hello, world!"); end;' > test.pli
-#   plic -C -dELF test.pli 
-#   gcc -m32 -no-pie -z muldefs -o test test.o -lprf
-#   ./test
+# Examples:
+#   docker run --rm --platform linux/386 --security-opt seccomp=unconfined pli-dev --help
+#   docker run --rm --platform linux/386 --security-opt seccomp=unconfined \
+#     -v "$PWD":/work -w /work pli-dev hello.pli
+# 
+# Interactive shell:
+#   docker run --rm -it --platform linux/386 --security-opt seccomp=unconfined \
+#     --entrypoint bash pli-dev
 #
 # Note:
 #   plic is a 32-bit binary and fails with "SIGACTION 1 returned -1"
@@ -56,8 +58,8 @@ RUN wget -q "http://www.iron-spring.com/pli-${PLI_VERSION}.tgz" -O /tmp/pli.tgz 
 # Download and install plicc (PL/I compile & link toolchain)
 RUN wget -q "https://github.com/ross-shk/plic-chain/archive/refs/tags/v1.0.0.tar.gz" -O /tmp/plicc.tgz \
     && tar -xzf /tmp/plicc.tgz -C /tmp \
-    && cp /tmp/plic-chain-1.0.0/plicc /usr/local/bin/plicc \
-    && chmod 755 /usr/local/bin/plicc \
+    && cp /tmp/plic-chain-1.0.0/plicc /usr/bin/plicc \
+    && chmod 755 /usr/bin/plicc \
     && rm -rf /tmp/plicc*
 
 # Create a non-root user for daily work
@@ -70,4 +72,5 @@ USER plidev
 ENV PATH="/usr/local/bin:${PATH}" \
     LD_LIBRARY_PATH="/usr/lib/pli:${LD_LIBRARY_PATH}"
 
-CMD ["/bin/bash"]
+ENTRYPOINT ["/usr/bin/plicc"]
+CMD ["--help"]
