@@ -2,12 +2,9 @@
 #
 # Usage:
 #   docker build --platform linux/386 -t pli-dev .
-#   docker run --rm --platform linux/386 --security-opt seccomp=unconfined pli-dev <args>
-# 
-# Examples:
-#   docker run --rm --platform linux/386 --security-opt seccomp=unconfined pli-dev --help
+#   docker run --rm -it --platform linux/386 --security-opt seccomp=unconfined pli-dev
 #   docker run --rm --platform linux/386 --security-opt seccomp=unconfined \
-#     -v "$PWD":/work -w /work pli-dev hello.pli
+#     -v "$PWD":/work -w /work pli-dev plicc hello.pli
 #
 # Note:
 #   plic is a 32-bit binary and fails with "SIGACTION 1 returned -1"
@@ -68,5 +65,5 @@ USER plidev
 ENV PATH="/usr/local/bin:${PATH}" \
     LD_LIBRARY_PATH="/usr/lib/pli"
 
-ENTRYPOINT ["/usr/bin/plicc"]
-CMD ["--help"]
+ENTRYPOINT []
+CMD ["/bin/bash"]

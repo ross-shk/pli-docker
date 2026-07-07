@@ -20,40 +20,46 @@ Compile and run a PL/I program in one step:
 
 ```bash
 echo ' main: proc options(main); display("Hello, world!"); end;' > hello.pli
-docker compose run --rm -v "$PWD":/work -w /work pli hello.pli
+docker compose run --rm -v "$PWD":/work -w /work pli plicc hello.pli
 ./hello
+```
+
+Compile and run in one command:
+
+```bash
+docker compose run --rm -v "$PWD":/work -w /work pli plicc run hello.pli
 ```
 
 Show toolchain help:
 
 ```bash
-docker compose run --rm pli
+docker compose run --rm pli plicc help
 ```
 
 Compile with verbose output:
 
 ```bash
-docker compose run --rm -v "$PWD":/work -w /work pli --verbose hello.pli
+docker compose run --rm -v "$PWD":/work -w /work pli plicc --verbose hello.pli
 ```
 
 Compile only (no link):
 
 ```bash
-docker compose run --rm -v "$PWD":/work -w /work pli --compile hello.pli
+docker compose run --rm -v "$PWD":/work -w /work pli plicc compile hello.pli
 ```
 
 Compile multiple sources and link with a library:
 
 ```bash
-docker compose run --rm -v "$PWD":/work -w /work pli main.pli aux.pli -lnet
+docker compose run --rm -v "$PWD":/work -w /work pli plicc main.pli aux.pli -lnet
 ```
 
 ## Interactive shell
 
-Override the entrypoint to get a shell for debugging or manual work:
+Start a bash session by default:
 
 ```bash
-docker compose run --rm --entrypoint bash pli
+docker compose run --rm pli
 ```
 
 ## Mount a local directory
@@ -62,5 +68,5 @@ Mount your source code to edit on the host and compile inside the
 container (replace `/path/to/code` with an actual absolute path):
 
 ```bash
-docker compose run --rm -v /path/to/code:/work -w /work pli myprog.pli
+docker compose run --rm -v /path/to/code:/work -w /work pli plicc myprog.pli
 ```

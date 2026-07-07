@@ -9,3 +9,4 @@ services:
     stdin_open: true
     tty: true
     working_dir: /pli-dev
+    command: /bin/bash
