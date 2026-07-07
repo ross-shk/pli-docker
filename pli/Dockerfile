@@ -49,7 +49,7 @@ RUN wget -q "http://www.iron-spring.com/pli-${PLI_VERSION}.tgz" -O /tmp/pli.tgz 
     && rm -rf /tmp/pli*
 
 # Download and install plicc (PL/I compile & link toolchain)
-RUN wget -q "https://github.com/ross-shk/plic-chain/archive/refs/tags/v1.0.0.tar.gz" -O /tmp/plicc.tgz \
+RUN wget -q "https://github.com/ross-shk/plic-chain/archive/refs/tags/v1.1.0.tar.gz" -O /tmp/plicc.tgz \
     && tar -xzf /tmp/plicc.tgz -C /tmp \
     && cp /tmp/plic-chain-1.0.0/plicc /usr/bin/plicc \
     && chmod 755 /usr/bin/plicc \
