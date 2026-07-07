@@ -66,7 +66,7 @@ RUN groupadd -r plidev && useradd -r -g plidev -d /pli-dev -s /bin/bash plidev \
 USER plidev
 
 ENV PATH="/usr/local/bin:${PATH}" \
-    LD_LIBRARY_PATH="/usr/lib/pli:${LD_LIBRARY_PATH}"
+    LD_LIBRARY_PATH="/usr/lib/pli"
 
 ENTRYPOINT ["/usr/bin/plicc"]
 CMD ["--help"]

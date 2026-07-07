@@ -1,42 +1,66 @@
 # pli-docker
 
-Docker image for [Iron Spring PL/I](http://www.iron-spring.com/).
+Docker image for [Iron Spring PL/I](http://www.iron-spring.com/) with
+the `plicc` compile-and-link toolchain.
 
-The `plic` compiler is a 32-bit binary so it requires the `linux/386` platform under Docker.
+The `plic` compiler is a 32-bit binary so it requires the `linux/386`
+platform under Docker.
 
-This image has been tested on Linux, macOS, and Windows (via Docker Desktop's bundled QEMU).
-
-## Usage
-
-Build and run using ```docker compose```:
+## Setup
 
 ```bash
 docker compose build pli
+```
+
+Build once; thereafter the image is ready.
+
+## Quick start
+
+Compile and run a PL/I program in one step:
+
+```bash
+echo ' main: proc options(main); display("Hello, world!"); end;' > hello.pli
+docker compose run --rm -v "$PWD":/work -w /work pli hello.pli
+./hello
+```
+
+Show toolchain help:
+
+```bash
 docker compose run --rm pli
 ```
 
-## Test
-
-Inside the container:
+Compile with verbose output:
 
 ```bash
-plic -V
+docker compose run --rm -v "$PWD":/work -w /work pli --verbose hello.pli
 ```
+
+Compile only (no link):
+
 ```bash
-echo 'main: proc options(main); display("Hello"); end;' > test.pli
+docker compose run --rm -v "$PWD":/work -w /work pli --compile hello.pli
 ```
+
+Compile multiple sources and link with a library:
+
 ```bash
-plic -C -dELF test.pli
-gcc -m32 -no-pie -z muldefs -o test test.o -lprf
+docker compose run --rm -v "$PWD":/work -w /work pli main.pli aux.pli -lnet
 ```
+
+## Interactive shell
+
+Override the entrypoint to get a shell for debugging or manual work:
+
 ```bash
-./test
+docker compose run --rm --entrypoint bash pli
 ```
 
 ## Mount a local directory
 
-Mount your source code into the container to edit on the host and compile inside (replace ```</path/to/code>``` with an actual absolute path to your code):
+Mount your source code to edit on the host and compile inside the
+container (replace `/path/to/code` with an actual absolute path):
 
 ```bash
-docker compose run --rm -v </path/to/code>:/pli-dev/projects pli
+docker compose run --rm -v /path/to/code:/work -w /work pli myprog.pli
 ```
