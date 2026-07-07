@@ -8,10 +8,6 @@
 #   docker run --rm --platform linux/386 --security-opt seccomp=unconfined pli-dev --help
 #   docker run --rm --platform linux/386 --security-opt seccomp=unconfined \
 #     -v "$PWD":/work -w /work pli-dev hello.pli
-# 
-# Interactive shell:
-#   docker run --rm -it --platform linux/386 --security-opt seccomp=unconfined \
-#     --entrypoint bash pli-dev
 #
 # Note:
 #   plic is a 32-bit binary and fails with "SIGACTION 1 returned -1"
