@@ -26,7 +26,7 @@ Start a bash session by default, mount your current working directory as `/work`
 docker compose run --rm -v $PWD:/work pli
 ```
 
-Replace `$PWD` with an absolute path if you want to mount a differenct directory.
+Replace `$PWD` with an absolute path if you want to mount a different directory.
 
 Show toolchain help:
 

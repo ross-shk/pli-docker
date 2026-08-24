@@ -1,0 +1,2 @@
+# No extra context to ignore - pli/ contains only Dockerfile
+# Add patterns here if you mount additional files into build context
