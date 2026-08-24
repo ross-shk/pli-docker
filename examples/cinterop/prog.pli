@@ -1,0 +1,4 @@
+ main: proc options(main);
+   /* linked with helper.o via --cinterop - no C call needed for demo */
+   display('cinterop demo - PL/I + C linked');
+ end main;

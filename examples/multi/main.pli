@@ -1,0 +1,7 @@
+ main: proc options(main);
+   dcl greet entry;
+
+   call greet;
+   
+   display('main done');
+ end main;

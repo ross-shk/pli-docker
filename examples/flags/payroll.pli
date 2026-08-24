@@ -1,0 +1,6 @@
+ payroll: proc options(main);
+   %include defs;
+   display('x=' || x);
+   /* trigger a listing diagnostic: uncomment next line to see -ls handling */
+   /* display('done'); */
+ end payroll;

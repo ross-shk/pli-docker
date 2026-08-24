@@ -1,0 +1,3 @@
+ greet: proc;
+   display('Hello from greet');
+ end greet;
