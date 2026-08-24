@@ -38,3 +38,16 @@ Show toolchain help:
 docker compose run --rm pli plicc help
 ```
 
+## AI / Agent usage
+
+Non-interactive service `pli-agent` (`docker-compose.yml:14` `stdin_open: false`/`tty: false`) avoids hangs in coding agents:
+
+```bash
+# preferred for opencode / CI — no tty, QEMU for linux/386 handled via setup-qemu-action on GH Actions
+docker compose --profile agent run --rm -v "$PWD":/work -w /work pli-agent plicc run examples/hello.pli
+echo "rc:$?"  # 0 ok, 4 warn, 8 error
+grep -E '\(ERR[0-9]+\)|\(WRN[0-9]+\)' *.lst || true  # structured diagnostics (no --json, see plicc:1)
+```
+
+`plicc run --verbose` shows compile/link steps. Image carries OCI labels (`org.opencontainers.image.*` at `pli/Dockerfile:19`) + SBOM/provenance via `buildx` (`.github/workflows/docker.yml`).
+

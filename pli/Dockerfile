@@ -15,11 +15,19 @@ FROM debian:bullseye-slim
 
 ARG PLI_VERSION=1.4.1
 ARG PLICC_VERSION=1.1.0
+ARG VCS_REF=unknown
 
 LABEL description="Iron Spring PL/I development environment (unofficial)" \
       version="1.0" \
       pli-version=${PLI_VERSION} \
-      plicc-version=${PLICC_VERSION}
+      plicc-version=${PLICC_VERSION} \
+      org.opencontainers.image.title="pli" \
+      org.opencontainers.image.description="PL/I development environment (unofficial, Iron Spring PL/I)" \
+      org.opencontainers.image.source="https://github.com/ross-shk/pli-docker" \
+      org.opencontainers.image.revision=${VCS_REF} \
+      org.opencontainers.image.version=${PLI_VERSION} \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.base.name="debian:bullseye-slim"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 

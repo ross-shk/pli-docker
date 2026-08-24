@@ -60,3 +60,14 @@ make -C examples clean
 ```
 
 Use `plicc` for quick scripts, `make` for incremental/CI builds.
+
+## Agent notes
+
+Agents should use `pli-agent` (non-tty) and parse diagnostics via `*.lst`:
+
+```bash
+docker compose --profile agent run --rm -v "$PWD":/work -w /work pli-agent plicc run --verbose examples/hello.pli
+grep -E '\(ERR[0-9]+\)|\(WRN[0-9]+\)' hello.lst || echo "clean"
+```
+
+Requires `linux/386` + `seccomp=unconfined` (`docker-compose.yml:5,8`) — on GH Actions use `docker/setup-qemu-action`.

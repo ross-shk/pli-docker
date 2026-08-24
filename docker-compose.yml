@@ -2,6 +2,8 @@ services:
   pli:
     build:
       context: ./pli
+      args:
+        VCS_REF: ${VCS_REF:-unknown}
     platform: linux/386
     image: ghcr.io/ross-shk/pli
     security_opt:
@@ -10,3 +12,19 @@ services:
     tty: true
     working_dir: /pli-dev
     command: /bin/bash
+
+  pli-agent:
+    build:
+      context: ./pli
+      args:
+        VCS_REF: ${VCS_REF:-unknown}
+    platform: linux/386
+    image: ghcr.io/ross-shk/pli
+    security_opt:
+      - seccomp=unconfined
+    stdin_open: false
+    tty: false
+    working_dir: /pli-dev
+    command: plicc help
+    profiles:
+      - agent
