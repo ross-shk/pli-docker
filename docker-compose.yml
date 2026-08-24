@@ -3,7 +3,7 @@ services:
     build:
       context: ./pli
     platform: linux/386
-    image: pli-dev
+    image: ghcr.io/ross-shk/pli
     security_opt:
       - seccomp=unconfined
     stdin_open: true

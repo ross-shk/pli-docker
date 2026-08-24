@@ -1,10 +1,10 @@
-# Dockerfile for Iron Spring PL/I on Debian 11 (32-bit)
+# Dockerfile for PL/I on Debian 11 (32-bit) — unofficial image for Iron Spring PL/I
 #
 # Usage:
-#   docker build --platform linux/386 -t pli-dev .
-#   docker run --rm -it --platform linux/386 --security-opt seccomp=unconfined pli-dev
+#   docker build --platform linux/386 -t ghcr.io/ross-shk/pli .
+#   docker run --rm -it --platform linux/386 --security-opt seccomp=unconfined ghcr.io/ross-shk/pli
 #   docker run --rm --platform linux/386 --security-opt seccomp=unconfined \
-#     -v "$PWD":/work -w /work pli-dev plicc hello.pli
+#     -v "$PWD":/work -w /work ghcr.io/ross-shk/pli plicc hello.pli
 #
 # Note:
 #   plic is a 32-bit binary and fails with "SIGACTION 1 returned -1"
@@ -16,7 +16,7 @@ FROM debian:bullseye-slim
 ARG PLI_VERSION=1.4.1
 ARG PLICC_VERSION=1.1.0
 
-LABEL description="Iron Spring PL/I development environment" \
+LABEL description="Iron Spring PL/I development environment (unofficial)" \
       version="1.0" \
       pli-version=${PLI_VERSION} \
       plicc-version=${PLICC_VERSION}

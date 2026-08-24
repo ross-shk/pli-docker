@@ -1,7 +1,11 @@
 # pli-docker
 
-Docker image for the Iron Spring PL/I compiler with the `plicc` compile-and-link toolchain. The compiler is a 32-bit binary so it requires the `linux/386`
-platform under Docker.
+Unofficial Docker image for PL/I (Iron Spring PL/I compiler) with the `plicc` compile-and-link toolchain. The compiler is a 32-bit binary so it requires the `linux/386`
+platform under Docker. Not affiliated with Iron Spring.
+
+```bash
+docker pull ghcr.io/ross-shk/pli:1.4.1
+```
 
 ## Setup
 
