@@ -14,10 +14,12 @@
 FROM debian:bullseye-slim
 
 ARG PLI_VERSION=1.4.1
+ARG PLICC_VERSION=1.1.0
 
 LABEL description="Iron Spring PL/I development environment" \
       version="1.0" \
-      pli-version=${PLI_VERSION}
+      pli-version=${PLI_VERSION} \
+      plicc-version=${PLICC_VERSION}
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -49,7 +51,7 @@ RUN wget -q "http://www.iron-spring.com/pli-${PLI_VERSION}.tgz" -O /tmp/pli.tgz 
     && rm -rf /tmp/pli*
 
 # Download and install plicc (PL/I compile & link toolchain)
-RUN wget -q "https://github.com/ross-shk/plic-chain/archive/refs/tags/v1.1.0.tar.gz" -O /tmp/plicc.tgz \
+RUN wget -q "https://github.com/ross-shk/plic-chain/archive/refs/tags/v${PLICC_VERSION}.tar.gz" -O /tmp/plicc.tgz \
     && mkdir -p /tmp/plicc-install \
     && tar -xzf /tmp/plicc.tgz -C /tmp/plicc-install --strip-components=1 \
     && cp /tmp/plicc-install/plicc /usr/bin/plicc \
