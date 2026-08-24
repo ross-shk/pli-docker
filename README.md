@@ -1,37 +1,57 @@
 # pli-docker
 
-Docker image for PL/I (Iron Spring PL/I compiler, unofficial) with the `plicc` compile-and-link toolchain. The compiler is a 32-bit binary so it requires the `linux/386`
-platform under Docker. Not affiliated with Iron Spring.
+Docker image for PL/I (Iron Spring PL/I compiler, unofficial) with the `plicc` compile-and-link toolchain. The compiler is a 32-bit binary so it requires the `linux/386` platform under Docker. Not affiliated with Iron Spring.
+
+No GitHub account or registry access needed — clone and build locally. Prebuilt images are optional.
+
+## Prerequisites
+
+Docker Engine + Compose plugin (`docker compose version`).
+
+## Get the image
+
+**Option A — Build locally:**
 
 ```bash
-docker pull ghcr.io/ross-shk/pli:1.4.1  # GHCR
-docker pull ross-shk/pli:1.4.1          # Docker Hub
-```
-
-## Setup
-
-```bash
+git clone https://github.com/ross-shk/pli-docker.git
+cd pli-docker
 docker compose build pli
 ```
 
-Build once; thereafter the image is ready.
+Build once; thereafter the image `ghcr.io/ross-shk/pli` is ready locally.
 
-## Quick start
+**Option B — Pull prebuilt:**
 
-Compile and run a PL/I program in one step:
+```bash
+docker pull ghcr.io/ross-shk/pli:1.4.1  # GHCR
+docker pull ross-shk/pli:1.4.1          # Docker Hub (same image, if published)
+```
+
+## Quick start (after clone + build)
+
+Compile and run a PL/I program in one step — your current directory is mounted as `/work`:
 
 ```bash
 echo ' main: proc options(main); display("Hello, world!"); end;' > hello.pli
 docker compose run --rm -v "$PWD":/work -w /work pli plicc run hello.pli
+# → Hello, world!
 ```
 
-Start a bash session by default, mount your current working directory as `/work`:
+Try the bundled examples:
 
 ```bash
-docker compose run --rm -v $PWD:/work pli
+docker compose run --rm -v "$PWD":/work -w /work pli plicc run examples/hello.pli
+docker compose run --rm -v "$PWD":/work -w /work pli plicc run examples/multi/main.pli examples/multi/greet.pli
 ```
 
-Replace `$PWD` with an absolute path if you want to mount a different directory.
+Start an interactive bash (default, `/pli-dev`), mount your code as `/work`:
+
+```bash
+docker compose run --rm -v "$PWD":/work pli
+# inside: plicc run /work/hello.pli ; ls /work
+```
+
+Replace `$PWD` with an absolute path if you want a different host directory. All commands work offline after `docker compose build`; no `docker pull` or `.github` needed.
 
 Show toolchain help:
 
