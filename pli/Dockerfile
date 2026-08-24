@@ -1,4 +1,4 @@
-# Dockerfile for Iron Spring PL/I on Debian 12 (32-bit)
+# Dockerfile for Iron Spring PL/I on Debian 11 (32-bit)
 #
 # Usage:
 #   docker build --platform linux/386 -t pli-dev .
