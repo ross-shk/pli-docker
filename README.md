@@ -4,7 +4,8 @@ Unofficial Docker image for PL/I (Iron Spring PL/I compiler) with the `plicc` co
 platform under Docker. Not affiliated with Iron Spring.
 
 ```bash
-docker pull ghcr.io/ross-shk/pli:1.4.1
+docker pull ghcr.io/ross-shk/pli:1.4.1  # GHCR
+docker pull ross-shk/pli:1.4.1          # Docker Hub
 ```
 
 ## Setup
