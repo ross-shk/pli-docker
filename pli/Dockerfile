@@ -45,6 +45,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     make \
     nano \
     pkg-config \
+    python3 \
     sudo \
     wget \
     && apt-get clean \
